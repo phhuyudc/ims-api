@@ -1,0 +1,40 @@
+---
+title: Inventory
+---
+erDiagram
+    goods_note {
+        uuid[pk] goods_note_id
+        string[idx] goods_stock_id 
+        doule quantity
+        string user_id
+        string warehouse_id
+        string position_id
+        enum(import-export-other) type    
+    }
+    goods_stock {
+        uuid[pk] goods_stock_id
+        double quantity
+        position position
+    }
+    report {
+        int month
+        int[fk] stock_id
+        int[fk] warehouse_id
+        file_path file
+    }
+    warehouse {
+        int warehouse_id
+        string title
+    }
+    position {
+        int[pk] position_id
+        int warehouse_id
+        string position
+    }
+
+    goods_stock ||--o{ goods_note: have
+    warehouse ||--o{ report: have
+    warehouse ||--o{ position: have
+    goods_stock }o--|| position: in
+    goods_stock }o--|| warehouse: in
+
